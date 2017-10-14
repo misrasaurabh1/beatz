@@ -5,6 +5,8 @@ import numpy as np
 import sklearn
 from math import sqrt
 from bokeh.plotting import figure,show
+from Bio import pairwise2
+from Bio.pairwise2 import format_alignment
 seek_distance = 256
 rms_window = 60
 snare_file = "samples/shortlists/snare/CYCdh_K1close_Snr-05-16bit.wav"
@@ -12,6 +14,7 @@ kick_file = "samples/shortlists/kick/CYCdh_AcouKick-10-16bit.wav"
 closedhh_file = "samples/shortlists/closedhh/CYCdh_K4-ClHat02-16bit.wav"
 openhh_file = "samples/shortlists/openhh/KHatsOpen-07-16bit.wav"
 
+true_op = "12321232123212321232121301232123012321213012321130121321221233"
 parser = argparse.ArgumentParser()
 parser.add_argument("file", help ="path of the wav file to predict")
 args = parser.parse_args()
@@ -31,7 +34,7 @@ for sample in onset_samples:
 show(p)
 detected_events = []
 for center in onset_samples:
-	detected_events.append(np.array([center - seek_distance +1, center + seek_distance]))
+	detected_events.append(np.array([center - seek_distance/2 +1, center + 3*seek_distance/2]))
 print("detected_events :{}".format(len(detected_events)))
 windows = []
 #print detected_events
@@ -49,7 +52,9 @@ print(anomaly.predict(windows))
 
 clf = sklearn.externals.joblib.load('models/model.pkl')
 predict = clf.predict(windows)
-print(predict)
+pred_str = "".join(predict.astype(str))
+alignments = pairwise2.align.globalxx(true_op, pred_str)
+print(format_alignment(*alignments[0]))
 out_sr = 44100
 snare,_ = librosa.load(snare_file, sr = out_sr)
 openhh,_ = librosa.load(openhh_file, sr = out_sr)
