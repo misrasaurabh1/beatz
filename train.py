@@ -49,7 +49,10 @@ if __name__ == "__main__":
     le = sklearn.preprocessing.LabelEncoder()
     data = np.array(X)
     data = data.reshape(data.shape[0], data.shape[1])
-    data = sklearn.preprocessing.normalize(data, norm='l2')
+    scaler = sklearn.preprocessing.StandardScaler()
+    data = scaler.fit_transform(data)
+    joblib.dump(scaler, 'models/scaler.pkl')
+    #data = sklearn.preprocessing.normalize(data, norm='l2')
     labels = le.fit_transform(Y)
     print(labels)
     print(data[2])
@@ -74,7 +77,7 @@ if __name__ == "__main__":
     for window, pred_list in predict_windows.items():
         ctr = Counter(pred_list)
         window_pred.append([window,ctr.most_common(1)[0][0]])
-    window_pred =sorted(window_pred, key=lambda val: val[0])
+    window_pred = sorted(window_pred, key=lambda val: val[0])
 
     preds = [l[1] for l in window_pred]
     pred_idx = [l[0] for l in window_pred]

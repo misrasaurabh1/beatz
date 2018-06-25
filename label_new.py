@@ -87,34 +87,34 @@ if __name__ == "__main__":
         #clicks = get_clicks(files[file])
         onset_env = librosa.onset.onset_strength(y=y, sr=sr,hop_length = hop_dist,
         aggregate = np.median,centering=True)
-        onset_env = np.multiply(onset_env,1/onset_env.max())
+        onset_env = np.multiply(onset_env, 1/onset_env.max())
         onset_env_times = librosa.frames_to_samples(np.arange(len(onset_env)),hop_length=hop_dist)
         print(len(y))
         print(len(onset_env))
         #onset_frames = librosa.util.peak_pick(onset_env,10,10,5,5,0.5,10)
-        onset_frames = librosa.onset.onset_detect(y=y,backtrack=True,hop_length=hop_dist)
-        onsets = librosa.frames_to_samples(onset_frames,hop_length=hop_dist)
+        onset_frames = librosa.onset.onset_detect(y=y, backtrack=True, hop_length=hop_dist)
+        onsets = librosa.frames_to_samples(onset_frames, hop_length=hop_dist)
         print(onsets)
         onset_frames_ontime = librosa.onset.onset_detect(onset_envelope=onset_env)
-        onsets_t = librosa.frames_to_samples(onset_frames_ontime,hop_length=hop_dist)
+        onsets_t = librosa.frames_to_samples(onset_frames_ontime, hop_length=hop_dist)
         p = figure(title="audio", x_axis_label="sample no.", y_axis_label='amplitude',
                    plot_width=30000, tools = [hover])
-        p.line(np.arange(len(y)),y,line_width=1)
+        p.line(np.arange(len(y)), y,line_width=1)
         p.line(onset_env_times,onset_env,line_width=1,line_color="blue")
 
         print(np.linspace(onset_env[0],onset_env[-1],len(onset_env)))
 
         #Reverse onset backtrack
         #oenv = librosa.onset.onset_strength(y=y, sr=sr)
-        onset_raw = librosa.onset.onset_detect(onset_envelope=onset_env,backtrack = False,hop_length=hop_dist)
+        onset_raw = librosa.onset.onset_detect(onset_envelope=onset_env,backtrack=False,hop_length=hop_dist)
         reversed_oenv = np.fliplr([onset_env])[0]
 
-        last_frame = librosa.core.samples_to_frames([len(y)],hop_length=hop_dist)[0]
+        last_frame = librosa.core.samples_to_frames([len(y)], hop_length=hop_dist)[0]
         reversed_onsets = last_frame - onset_raw
         reversed_onsets = np.fliplr([reversed_onsets])[0]
         onset_bt_reversed = librosa.onset.onset_backtrack(reversed_onsets, reversed_oenv)
         onset_end = last_frame - onset_bt_reversed
-        onset_end = librosa.core.frames_to_samples(onset_end,hop_length=hop_dist)
+        onset_end = librosa.core.frames_to_samples(onset_end, hop_length=hop_dist)
         #beat tracker
         beat_times = librosa.beat.beat_track(y,start_bpm=100,units='samples')
         print("Beat times")
