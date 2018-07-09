@@ -9,10 +9,10 @@ from Bio import pairwise2
 from Bio.pairwise2 import format_alignment
 seek_distance = 256
 rms_window = 60
-snare_file = "samples/shortlists/snare/CYCdh_K1close_Snr-05-16bit.wav"
-kick_file = "samples/shortlists/kick/CYCdh_AcouKick-10-16bit.wav"
-closedhh_file = "samples/shortlists/closedhh/CYCdh_K4-ClHat02-16bit.wav"
-openhh_file = "samples/shortlists/openhh/KHatsOpen-07-16bit.wav"
+snare_file = "samples/CYCdh_K1close_Snr-05-16bit.wav"
+kick_file = "samples/CYCdh_AcouKick-10-16bit.wav"
+closedhh_file = "samples/CYCdh_K4-ClHat02-16bit.wav"
+openhh_file = "samples/KHatsOpen-07-16bit.wav"
 
 def get_windows(y,sr):
     hop_dist = 256
