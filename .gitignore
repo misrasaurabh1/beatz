@@ -1,3 +1,4 @@
 *.html
-*.m
 *.sublime*
+*.txt
+rootkey.csv

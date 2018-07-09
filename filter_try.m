@@ -28,6 +28,6 @@ for jj=1:length(realize)
   ylabel('|fft(u)|','Fontsize',[15])
 end
 hold on
-plot(ks,abs(fftshift(ut))/max(abs(ut)),'k:','Linewidth',[2])
+%plot(ks,abs(fftshift(ut))/max(abs(ut)),'k:','Linewidth',[2])
 set(gca,'Fontsize',[15])
-xlabel('frequency (k)') 
+xlabel('frequency (k)')

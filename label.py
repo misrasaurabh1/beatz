@@ -16,9 +16,9 @@ if __name__ == "__main__":
 			])
 	#for closedhithat_open_mouth1.wav, remove x = 5.466e+5 sample
 	files = {'raw_dataset/snare_open_mouth.wav' : "snare",
-			'raw_dataset/closedhihat_open_mouth1.wav' : "closedhh",
-			'raw_dataset/kick_open_mouth1.wav' : "kick",
-			'raw_dataset/openhihat_open_mouth1.wav' : "openhh"
+			#'raw_dataset/closedhihat_open_mouth1.wav' : "closedhh",
+			#'raw_dataset/kick_open_mouth1.wav' : "kick",
+			#'raw_dataset/openhihat_open_mouth1.wav' : "openhh"
 			}
 	for file in files:
 		y, sr = load(file, sr= 22050)
