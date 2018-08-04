@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, send_file
 import predict
 app = Flask(__name__)
 
@@ -8,5 +8,5 @@ def hello_world():
         print(request.files)
         f = request.files["test.wav"]
         f.save("/home/ubuntu/beatz/test_downloaded.wav")
-        predict.predict("/home/ubuntu/beatz/test_downloaded.wav")
-        return app.send_static_file("/home/ubuntu/beatz/output.wav")
+        print(predict.predict("/home/ubuntu/beatz/test_downloaded.wav"))
+        return send_file("/home/ubuntu/beatz/output.wav", as_attachment=True)
