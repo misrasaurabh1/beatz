@@ -10,3 +10,12 @@ def hello_world():
         f.save("/home/ubuntu/beatz/test_downloaded.wav")
         print(predict.predict("/home/ubuntu/beatz/test_downloaded.wav"))
         return send_file("/home/ubuntu/beatz/output.wav", as_attachment=True)
+
+@app.route('/uploadbass', methods=['POST'])
+def train_file():
+    if request.method == "POST":
+        args = request.args
+        print(args)
+        f = request.files
+        print(f)
+
