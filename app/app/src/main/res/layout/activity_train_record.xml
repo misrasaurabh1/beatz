@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:id="@+id/main_screen"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:background="@null"-->
+    <!--android:baselineAligned="false"-->
+    <!--android:clickable="false"-->
+    <!--android:orientation="vertical"-->
+    <!--android:padding="16dp">-->
+
+
+    <TextView
+        android:id="@+id/topText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:paddingBottom="8dp"
+        android:text="@string/record_text"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@+id/instrumentText"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <ImageButton
+        android:id="@+id/recordButton"
+        android:layout_width="138dp"
+        android:layout_height="115dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="112dp"
+        android:adjustViewBounds="true"
+        android:onClick="recordOnClick"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_microphone"
+        app:layout_constraintBottom_toTopOf="@+id/playButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/instrumentText" />
+    <!--<com.example.saurabh.beatz.TrainRecorder.RecordButton-->
+    <!--android:id="@+id/recordButton1"-->
+    <!--android:layout_width="138dp"-->
+    <!--android:layout_height="115dp"-->
+    <!--android:src="@drawable/ic_microphone" />-->
+
+    <!--<com.example.saurabh.beatz.TrainRecorder.PlayButton-->
+    <!--android:id="@+id/playButton"-->
+    <!--android:layout_width="87dp"-->
+    <!--android:layout_height="76dp"-->
+    <!--android:layout_marginTop="40dp"-->
+    <!--android:paddingBottom="5dp"-->
+    <!--android:visibility="invisible"-->
+    <!--android:src="@drawable/ic_stop" />-->
+    <ImageButton
+        android:id="@+id/playButton"
+        android:layout_width="87dp"
+        android:layout_height="76dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:adjustViewBounds="true"
+        android:onClick="playOnClick"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_stop"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/btnNext"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recordButton" />
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="118dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
+        android:src="@drawable/ic_play"
+        android:text="Record next"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playButton"
+        android:onClick="nextButtonClick"/>
+
+    <TextView
+        android:id="@+id/instrumentText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Instrument"
+        app:layout_constraintBottom_toTopOf="@+id/recordButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topText"
+        app:layout_constraintVertical_bias="0.513" />
+
+
+    <!--</LinearLayout>-->
+
+</android.support.constraint.ConstraintLayout>

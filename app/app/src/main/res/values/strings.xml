@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">beatz</string>
+    <string name="train_screen">Train</string>
+    <string name="record_screen">Record and Convert</string>
+    <string name="record_text">Play and Record the sound for this instrument repeatedly</string>
+</resources>
