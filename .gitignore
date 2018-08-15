@@ -2,3 +2,4 @@
 *.sublime*
 *.txt
 rootkey.csv
+venv/

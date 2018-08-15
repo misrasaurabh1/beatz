@@ -36,13 +36,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TrainRecorder extends AppCompatActivity {
 
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private static String mFileName = null;
-
+    private String mInstrument = null;
     private MediaRecorder mRecorder = null;
 
     private MediaPlayer   mPlayer = null;
@@ -53,6 +55,12 @@ public class TrainRecorder extends AppCompatActivity {
 
     boolean mStartRecording = true;
     boolean mStartPlaying = true;
+
+    private Map<String, String> mNextInstr = new HashMap<String, String>();
+    public void initNextInstr(){
+        mNextInstr.put("bass", "snare");
+        mNextInstr.put("snare","hihat");
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -155,23 +163,29 @@ public class TrainRecorder extends AppCompatActivity {
     public void nextButtonClick(View v){
         Intent intent = new Intent(this, UploaderService.class);
         intent.putExtra("filePath",mFileName);
-        intent.putExtra("instrument", "bass");
+        intent.putExtra("instrument", mInstrument);
         startService(intent);
         Toast.makeText(TrainRecorder.this, "File Upload started ",
                 Toast.LENGTH_SHORT).show();
+        Intent nextIntent = new Intent(this, TrainRecorder.class);
+        String next =  mNextInstr.get(mInstrument);
+        nextIntent.putExtra("Instrument_name", next);
+        startActivity(nextIntent);
     }
 
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.activity_train_record);
+        initNextInstr();
         String instrument= getIntent().getStringExtra("Instrument_name");
         TextView instrText = (TextView) findViewById(R.id.instrumentText);
         instrText.setText(instrument);
-
+        mInstrument = instrument;
         // Record to the external cache directory for visibility
         mFileName = getExternalCacheDir().getAbsolutePath();
         mFileName += "/audiorecordtest.mp4";
+
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 

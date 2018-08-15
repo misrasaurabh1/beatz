@@ -69,6 +69,11 @@ def segments_beat_tracking(beats, onsets, onset_end):
             segments_cleaned.append([closest_onset + beat, closest_onset_end + beat])
 
     return segments_cleaned
+
+def label_files(files_dict):
+    global files
+    files = files_dict
+
 if __name__ == "__main__":
 
     hover = HoverTool(tooltips=[

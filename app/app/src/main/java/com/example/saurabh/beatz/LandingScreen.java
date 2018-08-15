@@ -15,7 +15,7 @@ public class LandingScreen extends AppCompatActivity {
 
     public void onTrainerClick(View v){
         Intent intent = new Intent(getBaseContext(), TrainRecorder.class);
-        intent.putExtra("Instrument_name", "Bass");
+        intent.putExtra("Instrument_name", "bass");
         startActivity(intent);
     }
 }
