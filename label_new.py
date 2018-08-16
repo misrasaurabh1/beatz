@@ -6,6 +6,8 @@ from bokeh.plotting import figure, output_file, show
 from bokeh.models import HoverTool
 import scipy.io
 from sklearn.cluster import DBSCAN
+import sys
+debug = False
 files = {#'raw_dataset/snare_open_mouth.wav': "snare",
              'raw_dataset/click/snare_noisy_click.wav': "snare",
              'raw_dataset/click/closedhh-click.wav': "closedhh",
@@ -70,16 +72,12 @@ def segments_beat_tracking(beats, onsets, onset_end):
 
     return segments_cleaned
 
-def label_files(files_dict):
-    global files
-    files = files_dict
-
-if __name__ == "__main__":
-
-    hover = HoverTool(tooltips=[
-        ("x", "$x"),
-        ("y", "$y")
-    ])
+def label_files(files, debug = False):
+    if debug:
+        hover = HoverTool(tooltips=[
+            ("x", "$x"),
+            ("y", "$y")
+        ])
     print(os.getcwd())
     hop_dist = 256
     for file in files:
@@ -91,7 +89,7 @@ if __name__ == "__main__":
         plot_debug = 1
         #clicks = get_clicks(files[file])
         onset_env = librosa.onset.onset_strength(y=y, sr=sr,hop_length = hop_dist,
-        aggregate = np.median,centering=True)
+            aggregate = np.median,centering=True)
         onset_env = np.multiply(onset_env, 1/onset_env.max())
         onset_env_times = librosa.frames_to_samples(np.arange(len(onset_env)),hop_length=hop_dist)
         print(len(y))
@@ -102,12 +100,13 @@ if __name__ == "__main__":
         print(onsets)
         onset_frames_ontime = librosa.onset.onset_detect(onset_envelope=onset_env)
         onsets_t = librosa.frames_to_samples(onset_frames_ontime, hop_length=hop_dist)
-        p = figure(title="audio", x_axis_label="sample no.", y_axis_label='amplitude',
-                   plot_width=30000, tools = [hover])
-        p.line(np.arange(len(y)), y,line_width=1)
-        p.line(onset_env_times,onset_env,line_width=1,line_color="blue")
+        if debug:
+            p = figure(title="audio", x_axis_label="sample no.", y_axis_label='amplitude',
+                       plot_width=30000, tools = [hover])
+            p.line(np.arange(len(y)), y,line_width=1)
+            p.line(onset_env_times,onset_env,line_width=1,line_color="blue")
 
-        print(np.linspace(onset_env[0],onset_env[-1],len(onset_env)))
+            print(np.linspace(onset_env[0],onset_env[-1],len(onset_env)))
 
         #Reverse onset backtrack
         #oenv = librosa.onset.onset_strength(y=y, sr=sr)
@@ -143,9 +142,18 @@ if __name__ == "__main__":
         segments_cleaned = segments_beat_tracking(beat_times[1],onsets,onset_end)
         print(len(segments_cleaned))
         for idx, segment in enumerate(segments_cleaned):
-            p.line([segment[0], segment[0]], [0,0.5], line_color="green")
-            p.line([segment[1], segment[1]], [0,0.5], line_color="green")
-            np.savetxt(os.path.join('data/ver2', files[file], str(idx) + '.txt'), y[int(segment[0]):int(segment[1])], fmt='%f')
-        show(p)
+            if debug:
+                p.line([segment[0], segment[0]], [0,0.5], line_color="green")
+                p.line([segment[1], segment[1]], [0,0.5], line_color="green")
+            if not os.path.isdir(os.path.join('data', files[file])):
+                os.mkdir(os.path.join('data', files[file]))
+            np.savetxt(os.path.join('data', files[file], str(idx) + '.txt'), y[int(segment[0]):int(segment[1])], fmt='%f')
+        if debug:
+            show(p)
 
-        hardcoded_segmenting(y)
+        #hardcoded_segmenting(y)
+
+if __name__ == "__main__":
+    if len(sys.argv) > 1 and sys.argv[1] == "--debug":
+        debug = True
+    label_files(files, debug)

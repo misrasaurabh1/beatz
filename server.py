@@ -9,6 +9,7 @@ ALLOWED_EXTENSIONS = set(['mp4'])
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = b'_5#ypL"F4Q8z\n\xec]/'
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -39,23 +40,35 @@ def save_train_file(request,instr):
     if file and allowed_file(file.filename):
         print("Entered allowed file")
         filename = secure_filename("upload_{}.mp4".format(instr))
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        savePath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(savePath)
         print("File saved!")
-        return "upload_success", 200
+        return "upload_success", 200, savePath
 
 @app.route('/uploadbass', methods=['POST'])
 def save_bass():
     if request.method == "POST":
-        return save_train_file(request, "bass")
+        ret = save_train_file(request, "bass")
+        if len(ret) == 3 and ret[2]:
+            label_files({ret[2]: "bass"})
+        return ret[0], ret[1]
 
 @app.route('/uploadsnare', methods=['POST'])
 def save_snare():
     if request.method == "POST":
-        return save_train_file(request, "snare")
+        ret = save_train_file(request, "snare")
+        if len(ret) == 3 and ret[2]:
+            label_files({ret[2]: "snare"})
+        return ret[0], ret[1]
 
-@app.route('/uploadhihat', methods=['POST'])
+@app.route('/uploadclosedhh', methods=['POST'])
 def save_hihat():
     if request.method == "POST":
-        ret = save_train_file(request, "hihat")
-        label_files() #TODO: Complete this and label_new functions
+        ret = save_train_file(request, "closedhh")
+        if len(ret) == 3 and ret[2]:
+            label_files({ret[2]: "closedhh"})
+        return ret[0], ret[1]
 
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', debug=True, use_reloader=False)

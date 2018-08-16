@@ -35,6 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -59,7 +60,7 @@ public class TrainRecorder extends AppCompatActivity {
     private Map<String, String> mNextInstr = new HashMap<String, String>();
     public void initNextInstr(){
         mNextInstr.put("bass", "snare");
-        mNextInstr.put("snare","hihat");
+        mNextInstr.put("snare","closedhh");
     }
 
     @Override
@@ -162,6 +163,8 @@ public class TrainRecorder extends AppCompatActivity {
 
     public void nextButtonClick(View v){
         Intent intent = new Intent(this, UploaderService.class);
+        File f = new File(mFileName);
+        long length = f.length();
         intent.putExtra("filePath",mFileName);
         intent.putExtra("instrument", mInstrument);
         startService(intent);
