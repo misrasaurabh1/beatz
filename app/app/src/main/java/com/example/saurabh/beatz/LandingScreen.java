@@ -18,4 +18,8 @@ public class LandingScreen extends AppCompatActivity {
         intent.putExtra("Instrument_name", "bass");
         startActivity(intent);
     }
+    public void onInferenceClick(View v){
+        Intent intent = new Intent(getBaseContext(), Inference.class);
+        startActivity(intent);
+    }
 }

@@ -67,8 +67,14 @@ def save_hihat():
         ret = save_train_file(request, "closedhh")
         if len(ret) == 3 and ret[2]:
             label_files({ret[2]: "closedhh"})
+
         return ret[0], ret[1]
 
-
+@app.route('/uploadpredict', methods=['POST'])
+def predict():
+    if request.method == "POST":
+        ret = save_train_file(request, "predict")
+        if len(ret) == 3 and ret[2]:
+            print("NOT IMPLEMENTED YET")
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, use_reloader=False)

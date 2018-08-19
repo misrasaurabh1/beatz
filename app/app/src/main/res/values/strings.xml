@@ -3,4 +3,5 @@
     <string name="train_screen">Train</string>
     <string name="record_screen">Record and Convert</string>
     <string name="record_text">Play and Record the sound for this instrument repeatedly</string>
+    <string name="record_convert_text">Record the audio to convert to a drumtrack</string>
 </resources>

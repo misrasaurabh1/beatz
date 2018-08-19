@@ -141,13 +141,14 @@ def label_files(files, debug = False):
         #segments_cleaned = segments_wrt_clicks(onsets,onset_end,cluster_labels)
         segments_cleaned = segments_beat_tracking(beat_times[1],onsets,onset_end)
         print(len(segments_cleaned))
+        path = os.path.join('data', files[file])
+        if not os.path.isdir(path):
+            os.mkdir(path)
         for idx, segment in enumerate(segments_cleaned):
             if debug:
                 p.line([segment[0], segment[0]], [0,0.5], line_color="green")
                 p.line([segment[1], segment[1]], [0,0.5], line_color="green")
-            if not os.path.isdir(os.path.join('data', files[file])):
-                os.mkdir(os.path.join('data', files[file]))
-            np.savetxt(os.path.join('data', files[file], str(idx) + '.txt'), y[int(segment[0]):int(segment[1])], fmt='%f')
+            np.savetxt(os.path.join(path, str(idx) + '.txt'), y[int(segment[0]):int(segment[1])], fmt='%f')
         if debug:
             show(p)
 
