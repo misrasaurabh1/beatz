@@ -168,12 +168,20 @@ public class TrainRecorder extends AppCompatActivity {
         intent.putExtra("filePath",mFileName);
         intent.putExtra("instrument", mInstrument);
         startService(intent);
-        Toast.makeText(TrainRecorder.this, "File Upload started ",
-                Toast.LENGTH_SHORT).show();
-        Intent nextIntent = new Intent(this, TrainRecorder.class);
-        String next =  mNextInstr.get(mInstrument);
-        nextIntent.putExtra("Instrument_name", next);
-        startActivity(nextIntent);
+        if(mInstrument.equals("closedhh")){
+            Toast.makeText(TrainRecorder.this, "Uploading and learning",
+                    Toast.LENGTH_SHORT).show();
+            Intent homeIntent = new Intent(this, LandingScreen.class);
+            startActivity(homeIntent);
+        }
+        else {
+            Toast.makeText(TrainRecorder.this, "File Upload started ",
+                    Toast.LENGTH_SHORT).show();
+            Intent nextIntent = new Intent(this, TrainRecorder.class);
+            String next = mNextInstr.get(mInstrument);
+            nextIntent.putExtra("Instrument_name", next);
+            startActivity(nextIntent);
+        }
     }
 
     @Override
