@@ -13,7 +13,8 @@ from bokeh.plotting import figure, show
 def loadSamples():
     data = []
     labels = []
-    dirs = glob.glob("data/ver2/*/")
+    # dirs = glob.glob("data/ver2/*/")
+    dirs = glob.glob("uploads/train_uploads/*/")
     for aDir in dirs:
         # data[os.path.basename(aDir)] = []
         npFiles = glob.glob(aDir + "/*.txt")
@@ -40,8 +41,9 @@ def extractFeatures(data, labels):
         f_labels = f_labels + ([label] * mfcc.shape[1])
     return features, f_labels, window_labels
 
+def main_func():
+    # print("hello world!")
 
-if __name__ == "__main__":
     X, Y = loadSamples()
     print(Counter(Y).most_common(4))
     X, Y, windows = extractFeatures(X, Y)
@@ -52,7 +54,7 @@ if __name__ == "__main__":
     scaler = sklearn.preprocessing.StandardScaler()
     data = scaler.fit_transform(data)
     joblib.dump(scaler, 'models/scaler.pkl')
-    #data = sklearn.preprocessing.normalize(data, norm='l2')
+    # data = sklearn.preprocessing.normalize(data, norm='l2')
     labels = le.fit_transform(Y)
     print(labels)
     print(data[2])
@@ -67,7 +69,7 @@ if __name__ == "__main__":
     print("training accuracy on whole dataset : {}".format(
         sklearn.metrics.accuracy_score(labels, train_predict_labels)))
     joblib.dump(clf, 'models/model.pkl')
-    predict_windows ={}
+    predict_windows = {}
     for w_idx, lbl in zip(windows, train_predict_labels):
         if w_idx in predict_windows:
             predict_windows[w_idx].append(lbl)
@@ -76,7 +78,7 @@ if __name__ == "__main__":
     window_pred = []
     for window, pred_list in predict_windows.items():
         ctr = Counter(pred_list)
-        window_pred.append([window,ctr.most_common(1)[0][0]])
+        window_pred.append([window, ctr.most_common(1)[0][0]])
     window_pred = sorted(window_pred, key=lambda val: val[0])
 
     preds = [l[1] for l in window_pred]
@@ -90,8 +92,11 @@ if __name__ == "__main__":
     pca = sklearn.decomposition.PCA(n_components=2)
     data_2d = pca.fit_transform(data)
     print(data_2d)
-    colors = ["green", "gray", "red", "blue"] #
+    colors = ["green", "gray", "red", "blue"]  #
     label_colors = [colors[val] for val in labels]
-    p = figure(plot_width=800, plot_height=800,)
-    p.circle(data_2d[:,0], data_2d[:,1], size=5, color=label_colors)
+    p = figure(plot_width=800, plot_height=800, )
+    p.circle(data_2d[:, 0], data_2d[:, 1], size=5, color=label_colors)
     show(p)
+
+if __name__ == "__main__":
+    main_func()

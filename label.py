@@ -102,3 +102,5 @@ if __name__ == "__main__":
 		for idx,seg in enumerate(maxEnergySeg):
 			seg_start, seg_stop = segments[maxEnergySeg[seg]['pos']]
 			np.savetxt(os.path.join('data',files[file], str(idx)+'.txt'),y[seg_start:seg_stop], fmt = '%f')
+
+

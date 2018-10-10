@@ -18,7 +18,7 @@ import java.net.URL;
 
 public class UploaderService extends IntentService {
     @Nullable
-    String host = "ec2-18-205-159-48.compute-1.amazonaws.com";
+    String host = "ec2-52-90-38-156.compute-1.amazonaws.com";
     public UploaderService(){
         super("UploaderService");
     }

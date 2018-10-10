@@ -130,7 +130,6 @@ public class TrainRecorder extends AppCompatActivity {
         mFileName = getExternalCacheDir().getAbsolutePath();
         mFileName += "audio.mp4";
         media = new Media(mFileName);
-
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
     }
