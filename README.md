@@ -1,1 +1,3 @@
-Beatz is a android app to record dirty percussive hits and convert it to a real drum track. The dirty percussive hits can be of beatboxing or using a drumstick on any other surface.
+This android app was made to fulfill a vision of extending the human body's capability to play the drums without any instruments. I proved the idea by implementing a quick app that records sound of the player and sends those requests to a server which processes the request using by detecting the waves using Machine Learning and basic signal proccessing. You could then play back the synthesized track on the app promptly!by implementing an idea to convert beatboxing into real drums. I play drums and have been playing them since early undergrads (bachelors).
+
+I made this app during the summers of CMU to alongside my research internship. I used the app to record some of my samples and convert them to drums.
